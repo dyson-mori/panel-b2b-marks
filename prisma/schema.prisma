@@ -1,0 +1,133 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id String @id @unique @default(uuid())
+
+  nickname String @unique
+  password String
+
+  sales     Sales[]
+  seller    Seller[]
+  product   Product[]
+  consigned Consigned[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("employees")
+}
+
+model Consigned {
+  id String @id @unique @default(cuid())
+
+  employee_id String
+  seller_id   String @unique
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  employee Employee @relation(fields: [employee_id], references: [id])
+  seller   Seller   @relation(fields: [seller_id], references: [id])
+
+  @@map("consigned")
+}
+
+model Category {
+  id String @id @default(cuid())
+
+  title String
+  code  Int
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  product Product[]
+
+  @@map("categories")
+}
+
+model Provider {
+  id String @id @default(cuid())
+
+  title String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("provider")
+}
+
+model Receive {
+  id String @id @unique @default(cuid())
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("receive")
+}
+
+model Sales {
+  id String @id @unique @default(cuid())
+
+  employee_id String
+
+  seller     String // vendedor
+  client     String // cliente
+  sale_date  String // data da venda
+  sale_price Decimal // preço da venda
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  employee Employee @relation(fields: [employee_id], references: [id])
+
+  @@map("sales")
+}
+
+model Seller {
+  id String @id @unique @default(cuid())
+
+  employee_id String
+
+  name String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  consigned Consigned?
+
+  employee Employee @relation(fields: [employee_id], references: [id])
+
+  @@map("sellers")
+}
+
+model Product {
+  id Int @id @unique
+
+  employee_id String
+  category_id String
+
+  photo       String
+  description String
+  price       Decimal
+  provider    String
+  quantity    Int
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  category Category @relation(fields: [category_id], references: [id])
+  employee Employee @relation(fields: [employee_id], references: [id])
+
+  @@map("products")
+}
