@@ -1,0 +1,43 @@
+{
+  "name": "panel",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
+    "@next/env": "^15.0.2",
+    "@prisma/client": "^5.21.1",
+    "@react-pdf/renderer": "^4.0.0",
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-shell": "^2",
+    "cloudinary": "^2.5.1",
+    "jspdf": "^2.5.2",
+    "lucide-react": "^0.454.0",
+    "next": "^15.0.1",
+    "next-plugin-svgr": "^1.1.10",
+    "react": "^18.3.1",
+    "react-barcode": "^1.5.3",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.1",
+    "recharts": "^2.13.3",
+    "styled-components": "^6.1.13",
+    "yup": "^1.4.0"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
+    "@tauri-apps/cli": "^2",
+    "@types/node": "22.8.1",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "prisma": "^5.21.1",
+    "typescript": "^5.2.2",
+    "url-loader": "^4.1.1"
+  }
+}
