@@ -12,7 +12,7 @@ export const Container = styled.section`
 export const Content = styled.div`
   display: flex;
 
-  align-items: center;
+  flex-direction: column;
 
   width: 100%;
 
@@ -21,10 +21,37 @@ export const Content = styled.div`
   padding: 5px 15px;
   margin: 0px 5px;
 
+  .down {
+    margin: 5px 0;
+    font-size: 14px;
+    margin-left: -2px;
+  };
+
+  .down > span {
+    font-weight: 500;
+  }
+
   ${({ theme }) => css`
-    box-shadow: ${theme.settings.box.input};
+    box-shadow: ${theme.settings.box.default};
     border-radius: ${theme.settings.radius.small};
   `};
+
+  &:nth-child(1) {
+    margin-left: 0px;
+  };
+
+  &:last-child {
+    margin-right: 0px;
+  };
+`;
+
+export const Up = styled.div`
+  display: flex;
+
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
 
   span {
     min-width: 4px;
@@ -38,16 +65,8 @@ export const Content = styled.div`
     width: 100%;
     margin: 0px 15px;
   };
-  
+
   svg {
     min-width: 50px;
-  };
-
-  &:nth-child(1) {
-    margin-left: 0px;
-  };
-
-  &:last-child {
-    margin-right: 0px;
   };
 `;

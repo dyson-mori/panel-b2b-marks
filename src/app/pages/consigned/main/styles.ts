@@ -6,7 +6,7 @@ export const Container = styled.main`
   display: flex;
 
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
 
   flex-direction: column;
 
@@ -16,15 +16,12 @@ export const Container = styled.main`
   padding: 0 10px;
 `;
 
-export const Empty = styled.div`
-  width: 90%;
-  height: 90%;
+export const Header = styled.section`
+  display: flex;
 
-  transition: .5s;
+  width: 100%;
 
-  ${({ theme }) => css`
-    border-radius: ${theme.settings.border.radius.medium};
-  `};
+  margin: 10px 0;
 `;
 
 export const SelectStyled = styled(Select)`

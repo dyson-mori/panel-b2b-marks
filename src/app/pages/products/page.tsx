@@ -1,22 +1,16 @@
-import { prisma } from '../../../services';
+import type { Metadata } from 'next';
+
+import { api } from '@services';
+
 import Main from './main';
 
-const getProducts = async () => {
-  const res = await fetch('http://localhost:3000/api/product', {
-    method: 'GET'
-  });
-
-  if (!res.ok) {
-    throw new Error('product get fail')
-  };
-
-  return res.json();
+export const metadata: Metadata = {
+  title: 'Marks | Products',
 };
 
 export default async () => {
-  const products = await getProducts();
-
-  const category = await prisma.category.findMany();
+  const products = await api.product.list();
+  const category = await api.category.list();
 
   return <Main products={products} category={category} />;
 };

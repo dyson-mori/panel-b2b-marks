@@ -8,6 +8,7 @@ import { Container, DropDown } from './styles';
 
 interface SelectProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  find?: string | undefined;
   width?: 'small' | 'medium' | 'full';
   onChange: (e: any) => void;
   select: {
@@ -16,7 +17,7 @@ interface SelectProps extends React.InputHTMLAttributes<HTMLInputElement> {
   }[];
 };
 
-export const Select: React.FC<SelectProps> = ({ icon: Icon, width, select, placeholder, onChange, ...rest }) => {
+export const Select: React.FC<SelectProps> = ({ icon: Icon, width, select, placeholder, find, onChange, ...rest }) => {
   const theme = useTheme();
 
   const [show, setShow] = useState(false);

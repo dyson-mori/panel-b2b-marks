@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const Container = styled.main`
   display: flex;
@@ -8,4 +8,6 @@ export const Container = styled.main`
   width: 100%;
 
   padding: 25px;
+
+  overflow-y: auto;
 `;

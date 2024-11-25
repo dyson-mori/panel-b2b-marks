@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import { useClickOutside } from '@hooks/useClickOutside';
 
@@ -30,15 +30,6 @@ export const Modal: React.FC<Props> = ({ open, size = 'small', setClose, childre
     document.body.style.overflowY = open ? 'hidden' : 'auto';
   }, []);
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (!modalRef.current!.contains(event.target)) {
-  //       setClose();
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", handleClickOutside);
-  // }, [modalRef]);
-
   return (
     <Container style={styles}>
       <Content ref={modalRef} style={content_styles}>
@@ -47,5 +38,3 @@ export const Modal: React.FC<Props> = ({ open, size = 'small', setClose, childre
     </Container>
   )
 }
-
-// export default withClickOutside(Home);

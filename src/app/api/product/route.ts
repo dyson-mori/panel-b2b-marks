@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-import { prisma } from "../../../services";
+import { prisma } from "@services";
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
@@ -48,6 +48,9 @@ export async function GET(request: NextRequest) {
   };
 
   const data = await prisma.product.findMany({
+    orderBy: {
+      created_at: 'desc'
+    },
     include: {
       employee: {
         select: {
@@ -102,4 +105,23 @@ export async function POST(request: NextRequest) {
   });
 
   return NextResponse.json(data, { status: 201 });
+};
+
+export async function PUT(request: NextRequest) {
+  const { id, category, description, photo, price, provider, quantity } = await request.json();
+
+  const data = await prisma.product.update({
+    where: {
+      id
+    },
+    data: {
+      price,
+    }
+  });
+
+  return NextResponse.json(data, { status: 201 });
+};
+
+export async function DELETE(request: NextRequest) {
+  
 };

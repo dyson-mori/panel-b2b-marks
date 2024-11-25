@@ -15,6 +15,9 @@ import { ReactComponent as Graph } from './graph.svg';
 import { ReactComponent as Logout } from './logout.svg';
 import { ReactComponent as AddBox } from './box-add.svg';
 import { ReactComponent as People } from './people.svg';
+import { ReactComponent as Calendar } from './calendar.svg';
+import { ReactComponent as Printer } from './printer.svg';
+import { ReactComponent as Filter } from './filter.svg';
 
 export {
   Tag,
@@ -33,5 +36,8 @@ export {
   Graph,
   Logout,
   AddBox,
-  People
+  People,
+  Calendar,
+  Printer,
+  Filter
 }

@@ -3,22 +3,23 @@ import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { Category, Product } from '@prisma/client';
-
+import { api } from '@services';
+import { revalidate, uploadToCloudinary } from '@utils';
+import { ProductProps, CategoryProps } from '@interface';
 import { Button, Input, Modal, Select } from '@common';
 import { Link, Tag, TextingLeft, Coin, Buildings, Box } from '@assets/svg';
 
 import { Container, Sides } from './styles';
-import { onSubmit, schema } from './constance';
+import { schema } from './constance';
 
 interface Props {
   open: boolean;
-  setClose: (open: boolean) => void;
-  categories: Category[];
-  update: Product | null;
+  product: ProductProps | null;
+  setClose: () => void;
+  categories: CategoryProps[];
 };
 
-export default ({ open, categories, update, setClose }: Props) => {
+export default ({open,  categories, product, setClose }: Props) => {
   const { control, handleSubmit, setValue, formState: { isSubmitting } } = useForm({
     resolver: yupResolver(schema)
   });
@@ -44,24 +45,38 @@ export default ({ open, categories, update, setClose }: Props) => {
     );
   };
 
-  const submit = async (product: any) => {
-    const data = await onSubmit({ product });
+  const submit = async (prod: any) => {
+    if (!!product?.id) {
+      await api.product.update({ ...prod });
+      revalidate('products');
+      setClose();
+    };
 
-    if (!!data) setClose(false);
+    const image = await uploadToCloudinary(prod.file!, String(prod.id));
+
+    if (!image.public_id) {
+      throw new Error('upload fail')
+    };
+
+    await api.product.create({ ...prod, photo: image.secure_url });
+
+    revalidate('products');
+    setClose();
   };
 
   useEffect(() => {
-    if (!update) return;
-    setValue('id', update.id);
-    setValue('category', update.category);
-    setValue('description', update.description);
-    setValue('price', update.price as any);
-    setValue('provider', update.provider);
-    setValue('quantity', update.quantity);
-  }, [update]);
+    if (!product) return;
+    setValue('id', product.id);
+    setValue('file', product.photo);
+    setValue('category', product.category_id);
+    setValue('description', product.description);
+    setValue('price', product.price as any);
+    setValue('provider', product.provider);
+    setValue('quantity', product.quantity);
+  }, [product]);
 
   return (
-    <Modal open={open}>
+    <Modal open={!!product?.id || open} setClose={setClose} size='small'>
       <Container onSubmit={handleSubmit(submit)}>
 
         <Controller
@@ -90,7 +105,7 @@ export default ({ open, categories, update, setClose }: Props) => {
         />
 
         <Sides>
-          <h1>New Register</h1>
+          <h1>{product?.id ? `Update Product` : 'New Register'}</h1>
 
           <div style={{ height: 40 }} />
 
@@ -100,6 +115,7 @@ export default ({ open, categories, update, setClose }: Props) => {
             render={({ field: { value, onChange, onBlur } }) => {
               return (
                 <Select
+                  find={value}
                   width='medium'
                   select={select}
                   icon={Tag}

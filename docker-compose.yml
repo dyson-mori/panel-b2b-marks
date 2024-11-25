@@ -1,0 +1,9 @@
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: portal-b2b-marks
+    ports:
+      - "3030:3030"
+    restart: unless-stopped

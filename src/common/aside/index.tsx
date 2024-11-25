@@ -6,12 +6,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
-import { Box, Graph, Logout, People } from '../../assets/svg';
+import { Box, Graph, Logout, People } from '@assets/svg';
+import { Logo } from '@assets/images';
 
 import { logout } from './actions';
 import { Container, Header, Nav, Footer } from './styles';
-
-import Logo from '../../assets/icons/logo.png';
 
 export const Aside: React.FC = () => {
   const param = usePathname();
@@ -25,17 +24,17 @@ export const Aside: React.FC = () => {
 
       <Nav>
         <Link href={{ pathname: '/pages/dashboard' }}>
-          <Graph width={22} height={22} stroke={param === '/pages/dashboard' ? '#FA0B5B' : '#303030'} strokeWidth={param === '/pages/dashboard' ? 2 : 1.5} />
+          <Graph width={22} height={22} stroke={param.includes('dashboard') ? '#FA0B5B' : '#303030'} strokeWidth={param.includes('dashboard') ? 2 : 1.5} />
           <span />
           dashboard
         </Link>
         <Link href={{ pathname: '/pages/products' }}>
-          <Box width={22} height={22} stroke={param === '/pages/products' ? '#FA0B5B' : '#303030'} strokeWidth={param === '/pages/products' ? 2 : 1.5} />
+          <Box width={22} height={22} stroke={param.includes('products') ? '#FA0B5B' : '#303030'} strokeWidth={param.includes('products') ? 2 : 1.5} />
           <span />
           products
         </Link>
         <Link href={{ pathname: '/pages/consigned' }}>
-          <People width={22} height={22} stroke={param === '/pages/consigned' ? '#FA0B5B' : '#303030'} strokeWidth={param === '/pages/consigned' ? 2 : 1.5} />
+          <People width={22} height={22} stroke={param.includes('consigned') ? '#FA0B5B' : '#303030'} strokeWidth={param.includes('consigned') ? 2 : 1.5} />
           <span />
           consigned
         </Link>

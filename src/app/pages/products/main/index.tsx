@@ -2,32 +2,58 @@
 
 import React, { useState } from 'react';
 
-import { Category, Product } from '@prisma/client';
+import { CategoryProps, ProductProps } from '@interface';
+import { Button, Input, Product } from '@common';
+import { Box, Add, Filter } from '@assets/svg';
 
-import { Container } from './styles';
+import { Container, Content, Header } from './styles';
 
-import Header from '../components/header';
-import Table from '../components/table';
 import ModalRegister from '../components/register';
 
 interface Props {
-  products: Array<{
-    category: {
-      title: string;
-    }
-  } & Product>;
-  category: Category[];
+  products: ProductProps[]
+  category: CategoryProps[];
 };
 
 export default function Products({ products, category }: Props) {
-  const [register, setRegister] = useState(false);
-  const [update, setUpdate] = useState<Product | null>();
+  const size = {
+    width: (innerWidth - 240) / 4
+  };
+
+  const [product, setProduct] = useState<ProductProps | null>(null);
+  const [newProduct, setNewProduct] = useState(false);
 
   return (
     <Container>
-      <Header setRegister={setRegister} />
-      <Table products={products} setUpdate={e => { setUpdate(e), setRegister(true) }} />
-      <ModalRegister open={register} categories={category} update={update} setClose={setRegister} />
+      <Header>
+        <Input icon={Box} width='small' placeholder='Search' />
+
+        <div style={{ width: 5 }} />
+
+        <Button width={50} color='white' onClick={() => setNewProduct(true)}>
+          <Add width={25} height={25} stroke='#FA0B5B' strokeWidth={1.5} />
+        </Button>
+
+        <div style={{ width: 5 }} />
+
+        <Button width={50} color='white' onClick={() => {}}>
+          <Filter width={25} height={25} stroke='#FA0B5B' strokeWidth={1.5} />
+        </Button>
+      </Header>
+
+      <Content>
+        {products.map((row, index) => <Product key={index} product={row} size={size.width} onSelect={setProduct} />)}
+      </Content>
+
+      <ModalRegister
+        open={newProduct}
+        product={product}
+        categories={category}
+        setClose={() => {
+          setProduct(null)
+          setNewProduct(false)
+        }}
+      />
     </Container>
   );
 };

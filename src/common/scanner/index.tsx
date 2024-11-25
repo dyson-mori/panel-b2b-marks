@@ -38,8 +38,14 @@ export default () => {
     document.body.style.overflowY = product ? 'hidden' : 'auto';
   }, []);
 
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     api.product.list('851690720').then(setProduct);
+  //   }, 1000);
+  // }, []);
+
   return (
-    <Modal open={true} setClose={handleClose} size='small'>
+    <Modal open={open} setClose={handleClose} size='small'>
       <Container>
         <Product product={product} />
       </Container>

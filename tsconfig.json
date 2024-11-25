@@ -37,6 +37,7 @@
       "@utils": ["./src/utils"],
       "@services": ["./src/services"],
       "@hooks/*": ["./src/hooks/*"],
+      "@interface": ["./src/global/interface"]
     }
   },
   "include": [

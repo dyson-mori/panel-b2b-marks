@@ -1,9 +1,11 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const Container = styled.main`
   display: flex;
 
-  align-items: center;
+  /* align-items: center; */
+  /* justify-content: center; */
+
   flex-direction: column;
 
   width: 100%;
@@ -23,7 +25,17 @@ export const Header = styled.section`
 export const Content = styled.section`
   display: flex;
 
-  width: 100%;
+  /* justify-content: space-between; */
 
   flex-wrap: wrap;
+`;
+
+export const Empty = styled.div`
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 80vh;
 `;

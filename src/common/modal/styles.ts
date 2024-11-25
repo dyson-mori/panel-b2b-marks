@@ -16,6 +16,7 @@ export const Container = styled.div`
   transition: .3s;
 
   background-color: #000000aa;
+  backdrop-filter: blur(5px);
 `;
 
 export const Content = styled.section`

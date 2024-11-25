@@ -25,8 +25,8 @@ const categories = [
 ];
 
 export async function GET(request: NextRequest) {
-  const url = new URL(request.url);
-  const title = url.searchParams.get("title") as string;
+  // const url = new URL(request.url);
+  // const title = url.searchParams.get("title") as string;
 
   // await prisma.category.create({
   //   data: {
@@ -39,9 +39,9 @@ export async function GET(request: NextRequest) {
     orderBy: {
       title: 'asc'
     },
-    where: {
-      title
-    }
+    // where: {
+    //   title
+    // }
   });
 
   if (!data) {

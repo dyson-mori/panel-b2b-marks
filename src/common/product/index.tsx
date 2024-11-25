@@ -4,21 +4,30 @@ import Image from 'next/image';
 
 import { Product as PrismaProduct } from '@prisma/client';
 
-import { Container, Skeleton } from './styles';
+import { Container, Footer } from './styles';
 
 interface ProductProps {
-  product: PrismaProduct | null
+  size: number;
+  product: PrismaProduct;
+  onSelect: (product: PrismaProduct) => void;
 };
 
-const Product: React.FC<ProductProps> = ({ product }) => {
+const Product: React.FC<ProductProps> = ({ size = 300, product, onSelect }) => {
   if (!product) {
     return null;
   };
 
   return (
-    <Container>
-      <Skeleton />
-      {/* <Image src={product.photo} width={300} height={300} alt='photo' /> */}
+    <Container onClick={() => onSelect(product)}>
+      {
+        product.photo && <Image src={product.photo} width={size} height={size} alt='photo' />
+      }
+
+      <Footer>
+        <h3>{product.description}</h3>
+        <div style={{ height: 3 }} />
+        <p>R$ {product.price}</p>
+      </Footer>
     </Container>
   )
 }

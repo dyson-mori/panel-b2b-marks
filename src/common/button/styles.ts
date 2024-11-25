@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
-import { ButtonProps } from '.';
 
-export const Container = styled.button<ButtonProps>`
+export const Container = styled.button`
   display: flex;
 
   justify-content: center;
@@ -11,11 +10,17 @@ export const Container = styled.button<ButtonProps>`
 
   min-height: 50px;
 
-  ${({ theme }) => css`
-    border-radius: ${theme.settings.radius.small}
-  `};
-
   cursor: pointer;
+
+  ${({ theme, disabled }) => css`
+    /* border-radius: ${theme.settings.radius.small}; */
+    box-shadow: ${theme.settings.box.input};
+    
+    ${disabled && css`
+      cursor: default;
+      opacity: .5;
+    `}
+  `};
 `;
   // ${({ theme, disabled, primary, secondary }) => primary === 'true' && secondary === 'false' && css`
   //   color: ${theme.colors.white};

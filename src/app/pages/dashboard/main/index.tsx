@@ -2,23 +2,14 @@
 
 import React from 'react';
 
+import { Dashboard } from '@interface';
+
 import { Card } from '../components/card';
 import { Graph } from '../components/graph';
 
 import Table from '../components/table';
 
 import { Container } from './styles';
-
-interface DashboardProps {
-  graph: {
-    pie: any[];
-  };
-  cards: {
-    title: string;
-    content: number;
-    color: string;
-  }[];
-};
 
 const consigned = [
   {
@@ -72,11 +63,11 @@ const consigned = [
   },
 ];
 
-export default ({ dashboard }: { dashboard: DashboardProps }) => {
+export default ({ dashboard }: { dashboard: Dashboard }) => {
   return (
     <Container>
       <Card cards={dashboard.cards} />
-      <Graph graph={dashboard.graph} />
+      <Graph />
       <Table consigned={consigned} />
     </Container>
   );
