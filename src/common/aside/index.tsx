@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
-import { Box, Graph, Logout, People } from '@assets/svg';
+import { Box, Graph, Guy, Logout, Monitor, People } from '@assets/svg';
 import { Logo } from '@assets/images';
 
 import { logout } from './actions';
@@ -33,11 +33,21 @@ export const Aside: React.FC = () => {
           <span />
           products
         </Link>
-        <Link href={{ pathname: '/pages/consigned' }}>
+        <Link href={{ pathname: '/pages/seller' }}>
+          <Guy width={22} height={22} stroke={param.includes('seller') ? '#FA0B5B' : '#303030'} strokeWidth={param.includes('seller') ? 2 : 1.5} />
+          <span />
+          seller
+        </Link>
+        <Link href={{ pathname: '/pages/store' }}>
+          <Monitor width={22} height={22} stroke={param.includes('store') ? '#FA0B5B' : '#303030'} strokeWidth={param.includes('store') ? 2 : 1.5} />
+          <span />
+          store
+        </Link>
+        {/* <Link href={{ pathname: '/pages/consigned' }}>
           <People width={22} height={22} stroke={param.includes('consigned') ? '#FA0B5B' : '#303030'} strokeWidth={param.includes('consigned') ? 2 : 1.5} />
           <span />
           consigned
-        </Link>
+        </Link> */}
       </Nav>
 
       <Footer>

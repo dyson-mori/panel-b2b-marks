@@ -5,5 +5,5 @@ export const logout = async () => {
 
   const del = await cookies();
 
-  del.delete('current-user');
+  del.delete('use-token');
 };

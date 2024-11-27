@@ -1,8 +1,14 @@
-import { Category, Product } from "@prisma/client";
+import { Category, Product, Seller, Showcase } from "@prisma/client";
 
-import { Dashboard } from "@interface";
+import { Dashboard, SellerProps, ShowcaseProps } from "@interface";
 
 export type ApiProps = {
+  auth: {
+    login: (body: {
+      nickname: string;
+      password: string;
+    }) => Promise<boolean>;
+  };
   dashboard: {
     list: () => Promise<Dashboard>
   };
@@ -13,5 +19,13 @@ export type ApiProps = {
   };
   category: {
     list: () => Promise<Category[]>;
+  };
+  seller: {
+    list: () => Promise<SellerProps[]>;
+    create: (body: Omit<Seller, 'id' | 'employee_id' | 'created_at' | 'updated_at'>) => Promise<Seller>;
+  };
+  showcase: {
+    list: (sellerId?: string) => Promise<ShowcaseProps[]>;
+    create: (body: Omit<Showcase, 'id' | 'employee_id' | 'created_at' | 'updated_at'>) => Promise<Showcase>;
   };
 };

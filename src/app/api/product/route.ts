@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
 import { prisma } from "@services";
+import { Product } from "@prisma/client";
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
@@ -81,7 +82,10 @@ export async function POST(request: NextRequest) {
   const { id, category, description, photo, price, provider, quantity } = await request.json();
   const cookieStore = await cookies();
 
-  const employee_id = cookieStore.get('current-user')?.value as string;
+  const replace = price.replace(/[^\d,]/g, "").replace(",", "");
+  const formatToDecimal = replace.slice(0, replace.length - 2) + "." + replace.slice(replace.length - 2);
+
+  const employee_id = cookieStore.get('use-token')?.value as string;
 
   const find = await prisma.category.findFirst({
     where: {
@@ -98,7 +102,7 @@ export async function POST(request: NextRequest) {
 
       description,
       photo,
-      price,
+      price: Number(formatToDecimal),
       provider,
       quantity,
     }

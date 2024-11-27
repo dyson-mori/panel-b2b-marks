@@ -1,0 +1,33 @@
+{
+  "cards": [
+    {
+      "title": "Receive",
+      "color": "#4050D0",
+      "quantity": 0,
+      "today": 0
+    },
+    {
+      "title": "Sellers",
+      "color": "#9291DC",
+      "quantity": 0,
+      "today": 0
+    },
+    {
+      "title": "Sales",
+      "color": "#76A4F3",
+      "quantity": 0,
+      "today": 0
+    },
+    {
+      "title": "Products",
+      "color": "#8ECACD",
+      "quantity": 6,
+      "today": 3
+    }
+  ],
+  "graph": {
+    "area": [
+      
+    ]
+  }
+}

@@ -67,7 +67,7 @@ export default ({ dashboard }: { dashboard: Dashboard }) => {
   return (
     <Container>
       <Card cards={dashboard.cards} />
-      <Graph />
+      {/* <Graph /> */}
       <Table consigned={consigned} />
     </Container>
   );

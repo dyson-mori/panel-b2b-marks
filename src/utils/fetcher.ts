@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 interface Props {
@@ -26,6 +27,10 @@ export const fetcher = async ({ url, method, body, refresh }: Props) => {
 
   if (!res.ok) {
     throw new Error('Fetcher | Request Fail')
+  };
+
+  if (refresh) {
+    revalidatePath(url);
   };
 
   return res.json();

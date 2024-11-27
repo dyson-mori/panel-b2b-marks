@@ -1,24 +1,19 @@
 import styled, { css } from "styled-components";
 
-export const Container = styled.section`
+export const Container = styled.table`
+  border-collapse: collapse;
+  font-size: 0.8em;
   width: 100%;
+
+  overflow: hidden;
+
+  text-align: center;
 
   ${({ theme }) => css`
     box-shadow: ${theme.settings.box.input};
     border-radius: ${theme.settings.radius.small};
     background-color: ${theme.colors.white};
   `};
-`;
-
-export const Table = styled.table`
-  border-collapse: collapse;
-  font-size: 0.8em;
-  width: 100%;
-
-  border-radius: 5px 5px 0 0;
-  overflow: hidden;
-
-  text-align: center;
 
   thead tr {
     color: #fff;
@@ -59,7 +54,9 @@ export const Table = styled.table`
   thead th.actions {
     display: flex;
 
-    justify-content: space-evenly;
+    width: 100px;
+
+    justify-content: center;
     /* background-color: #ddddddaa; */
   };
 `;

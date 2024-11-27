@@ -15,11 +15,12 @@ model Employee {
 
   nickname String @unique
   password String
+  photo    String
 
   sales     Sales[]
   seller    Seller[]
   product   Product[]
-  consigned Consigned[]
+  consigned Showcase[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -27,10 +28,60 @@ model Employee {
   @@map("employees")
 }
 
-model Consigned {
+model Seller {
   id String @id @unique @default(cuid())
 
   employee_id String
+
+  name String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  showcase Showcase?
+
+  employee Employee @relation(fields: [employee_id], references: [id])
+
+  @@map("sellers")
+}
+
+model Product {
+  id Int @id @unique
+
+  employee_id String
+  category_id String
+
+  code_scanner Int?
+
+  photo       String
+  description String
+  price       Decimal
+  provider    String
+  quantity    Int
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  showcase Showcase[]
+
+  category Category @relation(fields: [category_id], references: [id])
+  employee Employee @relation(fields: [employee_id], references: [id])
+
+  @@map("products")
+}
+
+// mostruário
+model Showcase {
+  id String @id @unique @default(cuid())
+
+  // romaneio: record the products that the customer is taking
+  // consigned: remove returned products that were not sold
+  type       String // romaneio or consigned
+  data_start DateTime
+  data_end   DateTime
+
+  employee_id String
+  product_id  Int
   seller_id   String @unique
 
   created_at DateTime @default(now())
@@ -38,15 +89,16 @@ model Consigned {
 
   employee Employee @relation(fields: [employee_id], references: [id])
   seller   Seller   @relation(fields: [seller_id], references: [id])
+  product  Product  @relation(fields: [product_id], references: [id])
 
-  @@map("consigned")
+  @@map("showcases")
 }
 
 model Category {
   id String @id @default(cuid())
 
-  title String
-  code  Int
+  title String @unique
+  code  Int    @unique
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -54,17 +106,6 @@ model Category {
   product Product[]
 
   @@map("categories")
-}
-
-model Provider {
-  id String @id @default(cuid())
-
-  title String
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  @@map("provider")
 }
 
 model Receive {
@@ -92,44 +133,4 @@ model Sales {
   employee Employee @relation(fields: [employee_id], references: [id])
 
   @@map("sales")
-}
-
-model Seller {
-  id String @id @unique @default(cuid())
-
-  employee_id String
-
-  name String
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  consigned Consigned?
-
-  employee Employee @relation(fields: [employee_id], references: [id])
-
-  @@map("sellers")
-}
-
-model Product {
-  id Int @id @unique
-
-  employee_id String
-  category_id String
-
-  code_scanner Int?
-
-  photo       String
-  description String
-  price       Decimal
-  provider    String
-  quantity    Int
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  category Category @relation(fields: [category_id], references: [id])
-  employee Employee @relation(fields: [employee_id], references: [id])
-
-  @@map("products")
 }

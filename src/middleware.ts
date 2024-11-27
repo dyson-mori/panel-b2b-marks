@@ -4,10 +4,10 @@ import type { NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
   const getAllCookies = await cookies();
-  const currentUser = getAllCookies.get('current-user')?.value;
+  const currentUser = getAllCookies.get('use-token')?.value;
 
   if (currentUser && request.nextUrl.pathname === '/') {
-    return NextResponse.redirect(new URL('/pages/*', request.url));
+    return NextResponse.redirect(new URL('/pages/dashboard', request.url));
   };
 
   if (!currentUser && request.nextUrl.pathname.startsWith('/pages')) {

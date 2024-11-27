@@ -3,6 +3,7 @@ CREATE TABLE "employees" (
     "id" TEXT NOT NULL,
     "nickname" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "photo" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -53,10 +54,34 @@ CREATE TABLE "provider" (
 );
 
 -- CreateTable
+CREATE TABLE "receive" (
+    "id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "receive_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "sales" (
+    "id" TEXT NOT NULL,
+    "employee_id" TEXT NOT NULL,
+    "seller" TEXT NOT NULL,
+    "client" TEXT NOT NULL,
+    "sale_date" TEXT NOT NULL,
+    "sale_price" DECIMAL(65,30) NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "sales_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "products" (
     "id" INTEGER NOT NULL,
     "employee_id" TEXT NOT NULL,
     "category_id" TEXT NOT NULL,
+    "code_scanner" INTEGER,
     "photo" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "price" DECIMAL(65,30) NOT NULL,
@@ -84,6 +109,18 @@ CREATE UNIQUE INDEX "consigned_id_key" ON "consigned"("id");
 CREATE UNIQUE INDEX "consigned_seller_id_key" ON "consigned"("seller_id");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "categories_title_key" ON "categories"("title");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "categories_code_key" ON "categories"("code");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "receive_id_key" ON "receive"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "sales_id_key" ON "sales"("id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "products_id_key" ON "products"("id");
 
 -- AddForeignKey
@@ -94,6 +131,9 @@ ALTER TABLE "consigned" ADD CONSTRAINT "consigned_employee_id_fkey" FOREIGN KEY 
 
 -- AddForeignKey
 ALTER TABLE "consigned" ADD CONSTRAINT "consigned_seller_id_fkey" FOREIGN KEY ("seller_id") REFERENCES "sellers"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "sales" ADD CONSTRAINT "sales_employee_id_fkey" FOREIGN KEY ("employee_id") REFERENCES "employees"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "products" ADD CONSTRAINT "products_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -1,9 +1,17 @@
+version: '3.9'
+
 services:
-  app:
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    container_name: portal-b2b-marks
+  postgres:
+    image: postgres:latest
+    container_name: panel-b2b-marks
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: student
     ports:
-      - "3030:3030"
-    restart: unless-stopped
+      - '5432:5432'
+    volumes:
+      - ./sql/setup.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  postgres:

@@ -3,7 +3,6 @@ import React from 'react';
 import { useTheme } from 'styled-components';
 
 import { Container } from './styles';
-import { AddBox } from '../../assets/svg';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;

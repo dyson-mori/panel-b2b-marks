@@ -18,6 +18,9 @@ import { ReactComponent as People } from './people.svg';
 import { ReactComponent as Calendar } from './calendar.svg';
 import { ReactComponent as Printer } from './printer.svg';
 import { ReactComponent as Filter } from './filter.svg';
+import { ReactComponent as Logo } from './logo.svg';
+import { ReactComponent as Guy } from './guy.svg';
+import { ReactComponent as Monitor } from './monitor.svg';
 
 export {
   Tag,
@@ -39,5 +42,8 @@ export {
   People,
   Calendar,
   Printer,
-  Filter
+  Filter,
+  Logo,
+  Guy,
+  Monitor
 }

@@ -8,7 +8,7 @@ export const schema = yup.object({
   id: yup.number(),
   category: yup.string(),
   description: yup.string(),
-  price: yup.number(),
+  price: yup.string(),
   provider: yup.string(),
   quantity: yup.number(),
   print: yup.boolean(),

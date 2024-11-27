@@ -11,13 +11,14 @@ interface SelectProps extends React.InputHTMLAttributes<HTMLInputElement> {
   find?: string | undefined;
   width?: 'small' | 'medium' | 'full';
   onChange: (e: any) => void;
+  defaultValue?: string;
   select: {
     id: string;
     label: string;
   }[];
 };
 
-export const Select: React.FC<SelectProps> = ({ icon: Icon, width, select, placeholder, find, onChange, ...rest }) => {
+export const Select: React.FC<SelectProps> = ({ icon: Icon, width, select, defaultValue, placeholder, find, onChange, ...rest }) => {
   const theme = useTheme();
 
   const [show, setShow] = useState(false);
@@ -52,12 +53,16 @@ export const Select: React.FC<SelectProps> = ({ icon: Icon, width, select, place
 
   return (
     <Container style={styles}>
+      {
+        defaultValue && <span style={{ position: 'absolute', width: '100%', top: 0, bottom: 0, backgroundColor: 'transparent' }} />
+      }
       <span>
         <Icon width={21} height={21} stroke={theme.colors.primary} strokeWidth={2} />
       </span>
 
       <input
         ref={inputRef}
+        defaultValue={defaultValue}
         placeholder={placeholder ?? 'what?'}
         onFocus={() => setShow(true)}
         onChange={e => setSearch(e.target.value)}

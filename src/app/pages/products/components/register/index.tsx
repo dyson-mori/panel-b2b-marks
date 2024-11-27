@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { api } from '@services';
-import { revalidate, uploadToCloudinary } from '@utils';
+import { currencyFormat, revalidate, uploadToCloudinary } from '@utils';
 import { ProductProps, CategoryProps } from '@interface';
 import { Button, Input, Modal, Select } from '@common';
 import { Link, Tag, TextingLeft, Coin, Buildings, Box } from '@assets/svg';
@@ -20,7 +20,7 @@ interface Props {
 };
 
 export default ({open,  categories, product, setClose }: Props) => {
-  const { control, handleSubmit, setValue, formState: { isSubmitting } } = useForm({
+  const { control, handleSubmit, setValue, reset, formState: { isSubmitting } } = useForm({
     resolver: yupResolver(schema)
   });
 
@@ -50,6 +50,7 @@ export default ({open,  categories, product, setClose }: Props) => {
       await api.product.update({ ...prod });
       revalidate('products');
       setClose();
+      return;
     };
 
     const image = await uploadToCloudinary(prod.file!, String(prod.id));
@@ -62,6 +63,15 @@ export default ({open,  categories, product, setClose }: Props) => {
 
     revalidate('products');
     setClose();
+    reset({
+      category: '',
+      description: '',
+      file: '',
+      price: '',
+      provider: '',
+      quantity: 0,
+      id: 0
+    })
   };
 
   useEffect(() => {
@@ -155,9 +165,9 @@ export default ({open,  categories, product, setClose }: Props) => {
           <Controller
             name="price"
             control={control}
-            render={({ field: { value, onChange, onBlur } }) =>
-              <Input icon={Coin} value={value ?? ''} width='medium' placeholder="Price" onChange={onChange} onBlur={onBlur} />
-            }
+            render={({ field: { value, onChange, onBlur } }) => {
+              return <Input icon={Coin} value={currencyFormat(value!)} width='medium' placeholder="Price" onChange={onChange} onBlur={onBlur} />
+            }}
           />
 
           <div style={{ height: 10 }} />
