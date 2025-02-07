@@ -1,30 +1,26 @@
-import React, { ButtonHTMLAttributes, CSSProperties } from 'react';
+import React, { ButtonHTMLAttributes, forwardRef } from 'react';
 
-import { Container } from './styles';
-import theme from '../../global/theme';
+import { Container, Loading } from './styles';
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  // secondary?: boolean | string;
-  width?: 50 | 200 | 400 | 600;
-  color?: string;
-};
+export type Variant = 'primary' | 'select' | 'selected' | 'error' | 'loading';
 
-const Button: React.FC<ButtonProps> = ({ children, width = 200, color = 'primary', ...rest }) => {
-  const styles: CSSProperties = {
-    width,
-    backgroundColor: theme.colors[color],
-    color: '#fff',
-    fontWeight: 600
-  };
+type ButtonProps = {
+  variant?: Variant;
+  loading?: boolean;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
-  return (
-    <Container style={styles} {...rest}>
-      {children}
+const loading_css = (
+  <Loading>
+    <div className="lds-dual-ring"></div>
+  </Loading>
+);
+
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ variant = 'primary', children, ...rest }, ref) => (
+    <Container ref={ref} variant={variant} disabled={variant === 'loading'} {...rest}>
+      {variant === 'loading' ? loading_css : children}
     </Container>
   )
-};
+);
 
-export {
-  Button,
-  type ButtonProps
-}
+Button.displayName = 'Button';
